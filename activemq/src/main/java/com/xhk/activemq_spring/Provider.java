@@ -20,8 +20,8 @@ public class Provider {
 	public static void main(String[] args) {
 		ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
 		JmsTemplate jmsTemplate = context.getBean(JmsTemplate.class);
-		ActiveMQTopic topic = context.getBean(ActiveMQTopic.class);
-		jmsTemplate.send(topic,new MessageCreator() {
+		//ActiveMQTopic topic = context.getBean(ActiveMQTopic.class);
+		jmsTemplate.send(new MessageCreator() {
 			public Message createMessage(Session session) throws JMSException {
 				return session.createTextMessage("xxxxxxxxxxxxx");
 			}
