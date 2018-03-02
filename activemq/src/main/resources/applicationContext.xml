@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" 
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+						http://www.springframework.org/schema/beans/spring-beans.xsd 
+						http://www.springframework.org/schema/mvc 
+						http://www.springframework.org/schema/mvc/spring-mvc.xsd 
+						http://www.springframework.org/schema/context 
+						http://www.springframework.org/schema/context/spring-context.xsd 
+						http://www.springframework.org/schema/aop 
+						http://www.springframework.org/schema/aop/spring-aop.xsd 
+						http://www.springframework.org/schema/tx 
+						http://www.springframework.org/schema/tx/spring-tx.xsd ">
+	
+	<!-- 扫包 -->					
+	<context:component-scan base-package="com.xhk"/>
+	
+	
+	
+	
+	<!--              消息发送者           start                -->
+								
+	<!-- 配置jms服务提供商 -->
+	<bean id="targetConnectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
+		<property name="brokerURL" value="tcp://172.16.5.74:61616/"/>
+		<property name="userName" value="admin"/>
+		<property name="password" value="admin"/>
+	</bean>
+	
+	<!-- 配置连接工厂 -->
+	<bean id="connectionFactory" class="org.springframework.jms.connection.SingleConnectionFactory">
+		<property name="targetConnectionFactory" ref="targetConnectionFactory"/>
+	</bean>
+	
+	<!-- 配置spring JMS工具 -->
+	<bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+		<property name="connectionFactory" ref="connectionFactory"/>
+	</bean>
+	
+	<!-- 配置 消息队列 或者 消息主题 -->
+	<!-- 队列 -->
+	<bean id="queueDestination" class="org.apache.activemq.command.ActiveMQQueue">
+		<constructor-arg value="myqueue"/>
+	</bean>
+	
+	<!-- 主题 -->
+	<bean id="topicDestination" class="org.apache.activemq.command.ActiveMQTopic">
+		<constructor-arg value="mytopic"/>
+	</bean>
+	
+	<!--              消息发送者           end                -->
+	
+	
+	
+	
+	
+	
+	<!--              消息接收者          start                 -->
+	
+	<!-- 消息监听器容器 -->
+	<bean class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+		<property name="connectionFactory" ref="connectionFactory"/>
+		<property name="destination" ref="topicDestination"/>
+		<property name="messageListener" ref="messageListener"/>
+	</bean>
+	
+	<!--              消息接收者            end               -->
+</beans>     
