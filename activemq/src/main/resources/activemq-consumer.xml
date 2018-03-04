@@ -9,7 +9,6 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans 
 						http://www.springframework.org/schema/beans/spring-beans.xsd">
 	
-	
 	<!-- 配置JMS服务提供商  ActiveMQ -->
 	<bean id="activeMQConnectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
 		<property name="brokerURL" value="tcp://172.16.5.74:61616/"/>
