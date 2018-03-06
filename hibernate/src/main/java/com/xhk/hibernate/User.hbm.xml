@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- 完成实体类 和 数据表 映射 -->
+<hibernate-mapping>
+	<class name="com.xhk.hibernate.User" table="user">
+		<!-- 本类开启二级缓存 -->
+		<cache usage="read-only"/>
+		<!-- 主键 -->
+		<id name="id" column="id">
+			<generator class="native"/>	
+		</id>
+		
+		<!-- 普通属性 -->
+		<property name="pseudonym">
+			<!-- 数据库类型 -->
+			<column name="pseudonym" sql-type=""></column>
+		</property>
+		<!-- 普通属性 -->
+		<property name="realname" column="realname"></property>
+		<property name="lastupdate" column="lastupdate"></property>
+		<property name="currentissuesource" column="currentissuesource"></property>
+		<one-to-one name="" class="" foreign-key=""></one-to-one>
+		<!-- 多对一 -->
+		<many-to-one name="" foreign-key="" column="" class=""></many-to-one>
+		<!-- 一对多 -->	<!-- 级联 -->
+		<bag name="" cascade="">
+			<!-- 多一方的外键 -->
+			<key column=""></key>
+			<one-to-many class=""/>
+		</bag>
+	</class>
+	
+	<!-- 预定义sql -->
+	<sql-query name="login">
+		<![CDATA[select * from user where pseudonym = ? and realname = ?]]>
+	</sql-query>
+	
+</hibernate-mapping>
