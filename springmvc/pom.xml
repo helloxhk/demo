@@ -72,11 +72,11 @@
 		</dependency>
 		
 		<!-- Oracle驱动 -->
-		<dependency>
+		<!-- <dependency>
 			<groupId>com.oracle</groupId>
 			<artifactId>ojdbc6</artifactId>
 			<version>11.2.0.1.0</version>
-		</dependency>
+		</dependency> -->
 		<!--Mysql驱动 -->
 		<dependency>
 			<groupId>mysql</groupId>
